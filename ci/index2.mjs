@@ -37,6 +37,7 @@ connect(async (client) => {
 
   const test = await maven
     .withServiceBinding('db', mariadb)
+    .withEnvVariable('MYSQL_URL', 'jdbc:mysql://petclinic:petclinic@db/petclinic')
     .withExec(['mvn', '-Dspring.profiles.active=mysql', 'clean', 'test'])
     .stdout();
 
