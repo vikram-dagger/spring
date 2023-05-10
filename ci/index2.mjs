@@ -59,7 +59,11 @@ connect(async (client) => {
   console.log(imageRef);
 
   // test with
-  // docker run --rm -d --name mariadb -e MYSQL_USER=petclinica -e MYSQL_PASSWORD=petclinica -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=petclinica -p 3306:3306 mariadb:10.11.2
-  // docker run --rm -p 8080:8080 -e MYSQL_URL=jdbc:mysql://petclinica:petclinica@mariadb/petclinica vikramatdagger/mypetclinic:latest
+  // docker run --rm -d --name mariadb -e MYSQL_USER=petclinica -e MYSQL_PASSWORD=petclinica -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=petclinica --net=host mariadb:10.11.2
+  // docker run --rm --net=host -e MYSQL_URL=jdbc:mysql://petclinica:petclinica@localhost/petclinica vikramatdagger/mypetclinic:latest
+  // or
+  // docker network create test
+  // docker run --rm -d --name mariadb -e MYSQL_USER=petclinica -e MYSQL_PASSWORD=petclinica -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=petclinica --network=test mariadb:10.11.2
+  // docker run --rm --network=test -p 8080:8080 -e MYSQL_URL=jdbc:mysql://petclinica:petclinica@mariadb/petclinica vikramatdagger/mypetclinic:latest
 
 }, { LogOutput: process.stderr })
