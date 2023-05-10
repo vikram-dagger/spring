@@ -35,28 +35,32 @@ connect(async (client) => {
 		.withMountedDirectory('/app', hostDir)
 		.withWorkdir('/app');
 
+    /*
   const test = await maven
     .withServiceBinding('db', mariadb)
     .withEnvVariable('MYSQL_URL', 'jdbc:mysql://petclinic:petclinic@db/petclinic')
     .withExec(['mvn', '-Dspring.profiles.active=mysql', 'clean', 'test'])
     .stdout();
+    */
 
-    /*
   const targetDir = maven
+    .withServiceBinding('db', mariadb)
+    .withEnvVariable('MYSQL_URL', 'jdbc:mysql://petclinic:petclinic@db/petclinic')
     .withExec(['mvn', '-Dspring.profiles.active=mysql', 'clean', 'package'])
     .directory('./target');
 
   const imageRef = await client.container()
     .from('eclipse-temurin:17-alpine')
     .withDirectory('/app', targetDir)
-    .withEntrypoint(['java', '-jar', '/app/spring-petclinic-3.0.0-SNAPSHOT.jar'])
+    .withEntrypoint(['java', '-jar', '-Dspring.profiles.active=mysql', '/app/spring-petclinic-3.0.0-SNAPSHOT.jar'])
     .withRegistryAuth('docker.io', username, password)
     .publish(`docker.io/${username}/mypetclinic`);
 
   console.log(imageRef);
-  */
 
   // test with
-  // docker run -p 8080:8080 vikramatdagger/mypetclinic:latest
+  // docker run --rm -d -e MYSQL_USER=petclinica -e MYSQL_PASSWORD=petclinica -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=petclinica -p 3306:3306 mariadb:10.11.2
+  // export MYSQL_URL=jdbc:mysql://petclinica:petclinica@localhost/petclinica
+  // docker run --rm -p 8080:8080 vikramatdagger/mypetclinic:latest
 
 }, { LogOutput: process.stderr })
