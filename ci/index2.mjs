@@ -26,7 +26,8 @@ connect(async (client) => {
     .withEnvVariable('MARIADB_PASSWORD', 'petclinic')
     .withEnvVariable('MARIADB_DATABASE', 'petclinic')
     .withEnvVariable('MARIADB_ROOT_PASSWORD', 'root')
-    .withExposedPort(3306);
+    .withExposedPort(3306)
+    .withExec([]);
 
 	const maven = client.container()
     .from('maven:3.9-eclipse-temurin-17')
