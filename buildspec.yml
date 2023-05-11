@@ -9,7 +9,7 @@ phases:
   build:
     commands:
       - echo Running Dagger Pipeline
-      - node ci/index.mjs
+      - node ci/index3.mjs
 
   post_build:
     commands:
@@ -17,5 +17,5 @@ phases:
 
 artifacts:
   files:
-    - 'output/**/*'
-  name: builds/$CODEBUILD_BUILD_NUMBER
+    - 'target/**/*'
+  name: vikramtest-builds/$CODEBUILD_BUILD_NUMBER
