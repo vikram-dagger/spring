@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "npm install"
+      - npm install @dagger.io/dagger@latest
+
+  build:
+    commands:
+      - echo Running Dagger Pipeline
+      - node ci/index.mjs
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - 'output/**/*'
+  name: builds/$CODEBUILD_BUILD_NUMBER
